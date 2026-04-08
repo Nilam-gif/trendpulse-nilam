@@ -1,0 +1,33 @@
+import json
+import csv
+import os
+
+# Load latest JSON file
+file_path = "data/trends_20260408.json"  # change date if needed
+
+with open(file_path, "r") as f:
+    data = json.load(f)
+
+cleaned = []
+
+for item in data:
+    # Remove entries with missing title
+    if not item.get("title"):
+        continue
+
+    # Fix missing values
+    item["score"] = item.get("score", 0)
+    item["num_comments"] = item.get("num_comments", 0)
+    item["author"] = item.get("author", "unknown")
+
+    cleaned.append(item)
+
+# Save CSV
+csv_file = "data/trends_cleaned.csv"
+
+with open(csv_file, "w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=cleaned[0].keys())
+    writer.writeheader()
+    writer.writerows(cleaned)
+
+print(f"Saved cleaned data to {csv_file}")
