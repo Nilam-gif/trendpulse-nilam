@@ -1,0 +1,20 @@
+import pandas as pd
+
+# Load CSV
+df = pd.read_csv("data/trends_cleaned.csv")
+
+# 1. Count per category
+print("\nStories per category:")
+print(df["category"].value_counts())
+
+# 2. Average score per category
+print("\nAverage score:")
+print(df.groupby("category")["score"].mean())
+
+# 3. Top 5 highest scored posts
+print("\nTop 5 posts:")
+print(df.sort_values(by="score", ascending=False).head(5)[["title", "score"]])
+
+# 4. Most active authors
+print("\nTop authors:")
+print(df["author"].value_counts().head(5))
