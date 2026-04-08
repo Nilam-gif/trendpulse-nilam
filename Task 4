@@ -1,0 +1,15 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("data/trends_cleaned.csv")
+
+# Plot 1: Category count
+df["category"].value_counts().plot(kind="bar", title="Stories per Category")
+plt.xlabel("Category")
+plt.ylabel("Count")
+plt.show()
+
+# Plot 2: Average score
+df.groupby("category")["score"].mean().plot(kind="bar", title="Average Score")
+plt.ylabel("Score")
+plt.show()
